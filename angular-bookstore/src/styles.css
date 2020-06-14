@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face{
+    font-family: 'roboto mono';
+    src: url(/assets/fonts/roboto/Roboto-Regular.ttf) format("truetype");
+}
+
+body {
+  font-family: 'roboto mono';
+}

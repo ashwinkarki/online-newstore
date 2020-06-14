@@ -1,18 +1,4 @@
-Book store
-
-<table border="1px">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let book of books">
-      <td>{{book.name}}</td>
-      <td>{{book.description}}</td>
-      <td>{{book.unitPrice | currency: 'INR'}}</td>
-    </tr>
-  </tbody>
-</table>
+<div>
+  <h1>Book store</h1>
+  <app-book-list></app-book-list>
+</div>
