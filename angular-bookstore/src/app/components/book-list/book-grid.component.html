@@ -1,16 +1,16 @@
 <div class="row">
   <div class="col-lg-4 col-md-6 mb-4" *ngFor="let book of books">
     <div class="card h-100">
-      <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+      <a href="#"><img class="card-img-top" [src]="book.imageUrl" alt=""></a>
       <div class="card-body">
         <h4 class="card-title">
-          <a href="#">Item One</a>
+          <a href="#">{{book.name}}</a>
         </h4>
-        <h5>$24.99</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+        <h5>{{book.unitPrice | currency: 'INR'}}</h5>
+        <p class="card-text text-truncate">{{book.description}}</p>
       </div>
       <div class="card-footer">
-        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+        <button class="btn btn-primary float-right">Add Cart</button>
       </div>
     </div>
   </div>
