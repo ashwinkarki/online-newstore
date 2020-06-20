@@ -1,0 +1,15 @@
+<div class="col=md-12">
+
+    <div class="row">
+      <div class="col-md-10">
+          <!-- reference value= searchinput -->
+        <input type="text" #searchinput class="form-control"
+        (keyup.enter)="serachBooks(searchinput.value)" placeholder="Search books">
+      </div>
+      <div class="col-md-2">
+        <button type="submit" 
+        (click)="serachBooks(searchinput.value)"
+        class="btn btn-primary">Search</button>
+      </div>
+    </div>
+  </div>

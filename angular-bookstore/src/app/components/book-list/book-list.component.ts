@@ -12,6 +12,7 @@ import { BookService } from 'src/app/service/book.service';
 export class BookListComponent implements OnInit {
   books :Book[];
   currentCategoryId:number;
+  searchMode:boolean;
 
   constructor(private bookService:BookService,private _activatedRoute:ActivatedRoute) { 
 
@@ -25,22 +26,15 @@ export class BookListComponent implements OnInit {
   }
 
   listBooks(){
-
-    const hasCategoryId:boolean=  this._activatedRoute.snapshot.paramMap.has('id');
-
-    if(hasCategoryId){
-     this.currentCategoryId= +this._activatedRoute.snapshot.paramMap.get('id');
+    this.searchMode =this._activatedRoute.snapshot.paramMap.has('keyword');
+    if(this.searchMode){
+      //do search books
+      this.handleSearchBooks();
     }
     else{
-      this.currentCategoryId=1;
+      //dispaly book based on cateogory
+      this.handleListBooks();
     }
-
-    this.bookService.getBooks(this.currentCategoryId).subscribe(
-      data  => {
-       // console.log(data);
-       this.books=data;
-      }
-    )
   }
 
   /* books :Book[]=[{
@@ -76,5 +70,31 @@ export class BookListComponent implements OnInit {
     createdOn: new Date(),
     updatedOn: null,
   }]; */
+  handleListBooks(){
+        
+    const hasCategoryId:boolean=  this._activatedRoute.snapshot.paramMap.has('id');
 
+    if(hasCategoryId){
+     this.currentCategoryId= +this._activatedRoute.snapshot.paramMap.get('id');
+    }
+    else{
+      this.currentCategoryId=1;
+    }
+
+    this.bookService.getBooks(this.currentCategoryId).subscribe(
+      data  => {
+       // console.log(data);
+       this.books=data;
+      }
+    )
+  }
+
+  handleSearchBooks(){
+       const keyword:string= this._activatedRoute.snapshot.paramMap.get('keyword');
+       this.bookService.searchBooks(keyword).subscribe(
+         data =>{
+         //console.log(data);
+         this.books=data;
+       })
+  }
 }
