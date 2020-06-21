@@ -14,6 +14,10 @@ export class BookListComponent implements OnInit {
   currentCategoryId:number;
   searchMode:boolean;
 
+  //for pagination
+  pageOfItems:Array<Book>;
+  pageSize:number=6;
+  //items = [];
   constructor(private bookService:BookService,private _activatedRoute:ActivatedRoute) { 
 
   }
@@ -23,6 +27,13 @@ export class BookListComponent implements OnInit {
    this._activatedRoute.paramMap.subscribe(() => {
         this.listBooks();
       })
+
+   
+  }
+
+  pageClick(pageOfItems:Array<Book>){
+      //update the current page of items
+      this.pageOfItems=pageOfItems;
   }
 
   listBooks(){
@@ -85,6 +96,7 @@ export class BookListComponent implements OnInit {
       data  => {
        // console.log(data);
        this.books=data;
+      // this.items=this.books;
       }
     )
   }
@@ -95,6 +107,7 @@ export class BookListComponent implements OnInit {
          data =>{
          //console.log(data);
          this.books=data;
+       //  this.items=this.books;
        })
   }
 }
