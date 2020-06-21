@@ -77,7 +77,10 @@
             <ngb-pagination
             [(page)]="currentPage"
             [pageSize]="pageSize"
-            [collectionSize]="totalRecords" (pageChange)="listBooks()"></ngb-pagination>
+            [collectionSize]="totalRecords" (pageChange)="listBooks()" class="d-flex justify-content-end">
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+          </ngb-pagination>
           </div>
         </div>
 

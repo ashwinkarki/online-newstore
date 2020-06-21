@@ -34,9 +34,9 @@ export class BookService {
   }
 
 //for searching books
-  searchBooks(keyword:string):Observable<Book[]>{
-    const searchURL=`${this.baseUrl}/search/searchbykeyword?xyz=${keyword}`;
-  return this.getBookList(searchURL);
+  searchBooks(keyword:string,currentPage:number,pageSize:number):Observable<GetResponseBook>{
+    const searchURL=`${this.baseUrl}/search/searchbykeyword?xyz=${keyword}&page=${currentPage}&size=${pageSize}`;
+  return this.httpClient.get<GetResponseBook>(searchURL);
 
   }
 

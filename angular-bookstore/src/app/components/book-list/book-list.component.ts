@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/common/book';
 import { ActivatedRoute } from '@angular/router';
 import { BookService } from 'src/app/service/book.service';
+import {NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-book-list',
@@ -22,8 +23,10 @@ export class BookListComponent implements OnInit {
   totalRecords:number=0;
  
   //items = [];
-  constructor(private bookService:BookService,private _activatedRoute:ActivatedRoute) { 
-
+  constructor(private bookService:BookService,private _activatedRoute:ActivatedRoute,
+    _config:NgbPaginationConfig) { 
+        _config.maxSize=3;
+        _config.boundaryLinks=true;
   }
 
   ngOnInit(): void {
@@ -42,7 +45,7 @@ export class BookListComponent implements OnInit {
 updatePageSize(pageSize:number){
   this.currentPage=1;
   this.pageSize=pageSize;
-      console.log(pageSize);
+     // console.log(pageSize);
        this.listBooks();
  }
  
@@ -117,7 +120,7 @@ updatePageSize(pageSize:number){
 
   processPaginate(){
     return data =>  {
-      console.log(data);
+     // console.log(data);
       this.books=data._embedded.books;
       //pageno starts from 1index
       this.currentPage=data.page.number+1;
@@ -128,11 +131,7 @@ updatePageSize(pageSize:number){
 
   handleSearchBooks(){
        const keyword:string= this._activatedRoute.snapshot.paramMap.get('keyword');
-       this.bookService.searchBooks(keyword).subscribe(
-         data =>{
-         //console.log(data);
-         this.books=data;
-       //  this.items=this.books;
-       })
+       this.bookService.searchBooks(keyword,this.currentPage-1,this.pageSize).subscribe(
+       this.processPaginate())
   }
 }
