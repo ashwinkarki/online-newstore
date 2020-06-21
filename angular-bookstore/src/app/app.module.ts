@@ -13,6 +13,7 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
 import { JwPaginationModule } from 'jw-angular-pagination';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import { CartStatusComponent } from './components/cart-status/cart-status.component';
 
 const routes:Routes=[
   {path:'books',component:BookListComponent},
@@ -31,7 +32,8 @@ const routes:Routes=[
     PageNotFoundComponent,
     BookCategoryComponent,
     SearchComponent,
-    BookDetailsComponent
+    BookDetailsComponent,
+    CartStatusComponent
   ],
   imports: [
     BrowserModule,
