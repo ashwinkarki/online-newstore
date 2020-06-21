@@ -11,6 +11,8 @@ import { BookCategoryComponent } from './components/book-category/book-category.
 import { SearchComponent } from './components/search/search.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { JwPaginationModule } from 'jw-angular-pagination';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 
 const routes:Routes=[
   {path:'books',component:BookListComponent},
@@ -29,14 +31,15 @@ const routes:Routes=[
     PageNotFoundComponent,
     BookCategoryComponent,
     SearchComponent,
-    BookDetailsComponent,
-  //  JwPaginationComponent
+    BookDetailsComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    JwPaginationModule
+    JwPaginationModule,
+    NgbModule,
+    NgbPaginationModule, NgbAlertModule
   ],
   providers: [
     BookService

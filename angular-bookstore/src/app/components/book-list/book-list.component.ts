@@ -10,13 +10,17 @@ import { BookService } from 'src/app/service/book.service';
   styleUrls: ['./book-list.component.css']
 })
 export class BookListComponent implements OnInit {
-  books :Book[];
-  currentCategoryId:number;
-  searchMode:boolean;
+  books :Book[]=[];
+  currentCategoryId:number=1;
+  searchMode:boolean=false;
+  previousCategory:number=1;
 
-  //for pagination
-  pageOfItems:Array<Book>;
-  pageSize:number=6;
+
+  //new codes for server side paging
+  currentPage:number=1;
+  pageSize:number=5;
+  totalRecords:number=0;
+ 
   //items = [];
   constructor(private bookService:BookService,private _activatedRoute:ActivatedRoute) { 
 
@@ -31,10 +35,18 @@ export class BookListComponent implements OnInit {
    
   }
 
-  pageClick(pageOfItems:Array<Book>){
-      //update the current page of items
-      this.pageOfItems=pageOfItems;
-  }
+//pagnation
+
+
+//update page size
+updatePageSize(pageSize:number){
+  this.currentPage=1;
+  this.pageSize=pageSize;
+      console.log(pageSize);
+       this.listBooks();
+ }
+ 
+
 
   listBooks(){
     this.searchMode =this._activatedRoute.snapshot.paramMap.has('keyword');
@@ -82,7 +94,7 @@ export class BookListComponent implements OnInit {
     updatedOn: null,
   }]; */
   handleListBooks(){
-        
+      
     const hasCategoryId:boolean=  this._activatedRoute.snapshot.paramMap.has('id');
 
     if(hasCategoryId){
@@ -92,13 +104,26 @@ export class BookListComponent implements OnInit {
       this.currentCategoryId=1;
     }
 
-    this.bookService.getBooks(this.currentCategoryId).subscribe(
-      data  => {
-       // console.log(data);
-       this.books=data;
-      // this.items=this.books;
-      }
-    )
+      //setting up to page no as 1 if user navigate to diff category
+     if(this.previousCategory != this.currentCategoryId){
+      this.currentPage=1;
+    } 
+
+    this.previousCategory=this.currentCategoryId;
+
+    this.bookService.getBooks(this.currentCategoryId
+      ,this.currentPage-1,this.pageSize).subscribe(this.processPaginate())
+  }
+
+  processPaginate(){
+    return data =>  {
+      console.log(data);
+      this.books=data._embedded.books;
+      //pageno starts from 1index
+      this.currentPage=data.page.number+1;
+      this.totalRecords=data.page.totalElements;
+      this.pageSize=data.page.size;
+    }
   }
 
   handleSearchBooks(){
