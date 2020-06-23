@@ -14,10 +14,12 @@ import { JwPaginationModule } from 'jw-angular-pagination';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { CartdetailsComponent } from './components/cartdetails/cartdetails.component';
 
 const routes:Routes=[
   {path:'books',component:BookListComponent},
-   {path:'books/:id',component:BookDetailsComponent},
+  {path:'cart-details', component: CartdetailsComponent},
+  {path:'books/:id',component:BookDetailsComponent},
   {path:'search/:keyword',component:BookListComponent},
   {path:'category/:id',component:BookListComponent},
   {path:'',redirectTo:'/books',pathMatch:'full'},
@@ -33,7 +35,8 @@ const routes:Routes=[
     BookCategoryComponent,
     SearchComponent,
     BookDetailsComponent,
-    CartStatusComponent
+    CartStatusComponent,
+    CartdetailsComponent
   ],
   imports: [
     BrowserModule,
