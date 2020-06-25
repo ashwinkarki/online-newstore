@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/service/cart.service';
 import { CartItem } from 'src/app/common/cart-item';
-import { createSocket } from 'dgram';
+//import { createSocket } from 'dgram';
 
 @Component({
   selector: 'app-cartdetails',
