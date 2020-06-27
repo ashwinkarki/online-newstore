@@ -15,8 +15,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
 import { CartdetailsComponent } from './components/cartdetails/cartdetails.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 const routes:Routes=[
+  {path: 'checkout', component: CheckoutComponent},
   {path:'books',component:BookListComponent},
   {path:'cart-details', component: CartdetailsComponent},
   {path:'books/:id',component:BookDetailsComponent},
@@ -36,7 +40,8 @@ const routes:Routes=[
     SearchComponent,
     BookDetailsComponent,
     CartStatusComponent,
-    CartdetailsComponent
+    CartdetailsComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +49,8 @@ const routes:Routes=[
     RouterModule.forRoot(routes),
     JwPaginationModule,
     NgbModule,
-    NgbPaginationModule, NgbAlertModule
+    NgbPaginationModule, NgbAlertModule,
+    ReactiveFormsModule
   ],
   providers: [
     BookService
