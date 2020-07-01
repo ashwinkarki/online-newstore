@@ -16,10 +16,25 @@ import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
 import { CartdetailsComponent } from './components/cartdetails/cartdetails.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { BoardAdminComponent } from './components/board-admin/board-admin.component';
+import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
+import { BoardUserComponent } from './components/board-user/board-user.component';
+import { authInterceptorProviders } from './_helpers/auth.interceptor';
 
 
 const routes:Routes=[
+  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'user', component: BoardUserComponent },
+  { path: 'mod', component: BoardModeratorComponent },
+  { path: 'admin', component: BoardAdminComponent },
   {path: 'checkout', component: CheckoutComponent},
   {path:'books',component:BookListComponent},
   {path:'cart-details', component: CartdetailsComponent},
@@ -41,7 +56,14 @@ const routes:Routes=[
     BookDetailsComponent,
     CartStatusComponent,
     CartdetailsComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent,
+    ProfileComponent,
+    BoardAdminComponent,
+    BoardModeratorComponent,
+    BoardUserComponent
   ],
   imports: [
     BrowserModule,
@@ -50,10 +72,14 @@ const routes:Routes=[
     JwPaginationModule,
     NgbModule,
     NgbPaginationModule, NgbAlertModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
-    BookService
+    BookService,
+    authInterceptorProviders
+   
   ],
   bootstrap: [AppComponent]
 })

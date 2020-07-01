@@ -10,11 +10,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
 import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import in.ashwin.onlinebookstore.entity.Book;
 
 //@CrossOrigin("http://localhost:4200")
+@Secured("permitAll")
 public interface BookRepository extends JpaRepository<Book,Long> {
 
 	@RestResource(path = "categoryid")
