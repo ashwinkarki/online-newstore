@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Book } from '../common/book';
 import { BookCategory } from '../common/book-category';
+import { Finalcart } from '../common/finalcart';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +18,7 @@ export class BookService {
 
   private baseUrl="http://localhost:8080/api/v1/books";
   private categoryUrl="http://localhost:8080/api/v1/book-category";
+  private finalCart="http://localhost:8080/api/test/";
 
   constructor(private httpClient:HttpClient) { }
 
@@ -44,6 +51,11 @@ export class BookService {
 get(bookId:number):Observable<Book>{
     const bookdetailUrl=`${this.baseUrl}/${bookId}`;
   return  this.httpClient.get<Book>(bookdetailUrl);
+}
+
+
+addFinalCart(finalCart:Finalcart){
+  return this.httpClient.post(`${this.baseUrl}`+'finalCart',finalCart, httpOptions);   
 }
 }
 
