@@ -1,6 +1,7 @@
 package in.ashwin.onlinebookstore.controller;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.ashwin.onlinebookstore.entity.Billingaddress;
+import in.ashwin.onlinebookstore.entity.Book;
+import in.ashwin.onlinebookstore.entity.CartItem;
 import in.ashwin.onlinebookstore.entity.Finalcart;
 import in.ashwin.onlinebookstore.entity.Order;
 import in.ashwin.onlinebookstore.entity.Shippingaddress;
@@ -26,6 +29,8 @@ import in.ashwin.onlinebookstore.entity.User;
 import in.ashwin.onlinebookstore.impl.UserDetailsImpl;
 import in.ashwin.onlinebookstore.impl.UserDetailsServiceImpl;
 import in.ashwin.onlinebookstore.repository.BillingaddressRepository;
+import in.ashwin.onlinebookstore.repository.BookRepository;
+import in.ashwin.onlinebookstore.repository.CartItemRepository;
 import in.ashwin.onlinebookstore.repository.OrderRepository;
 import in.ashwin.onlinebookstore.repository.ShippingaddressRepository;
 
@@ -39,6 +44,12 @@ public class TestController {
 	
 	@Autowired
 	private OrderRepository orderRep;
+	
+	@Autowired
+	private BookRepository bookrepository;
+	
+	@Autowired
+	private CartItemRepository cartItemRepo;
 	
 
 	
@@ -88,6 +99,13 @@ public class TestController {
 	 
 	 Shippingaddress sa=shippingAddressRepo.save(new Shippingaddress(finalCart.getShippingAddress(),ord));
 	 System.out.println(sa);
+	 
+	 finalCart.getCartItem().forEach(s->{
+		 Optional<Book> b=bookrepository.findById(Long.valueOf(s.getBookId()).longValue());
+		 cartItemRepo.save(new CartItem(s.getName(),s.getImageUrl(),s.getUnitPrice(),s.getQuantity(), b.get()));
+	 });
+	 
+	
 	 
 	   System.out.println(userDetails.getUsername()+userDetails.getPassword());
 		System.out.println("entered here");

@@ -1,10 +1,13 @@
 package in.ashwin.onlinebookstore.entity;
 
+import java.util.List;
+
 public class Finalcart {
 	
 private Billingaddress	billingAddress;
 private Creditcard creditCard;
 private Shippingaddress shippingAddress;
+private List<CartItem> cartItem;
 
 public Billingaddress getBillingAddress() {
 	return billingAddress;
@@ -33,6 +36,12 @@ public Shippingaddress getShippingAddress() {
 }
 public void setShippingAddress(Shippingaddress shippingAddress) {
 	this.shippingAddress = shippingAddress;
+}
+public List<CartItem> getCartItem() {
+	return cartItem;
+}
+public void setCartItem(List<CartItem> cartItem) {
+	this.cartItem = cartItem;
 }
 
 

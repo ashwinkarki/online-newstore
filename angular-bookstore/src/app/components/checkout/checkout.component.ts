@@ -77,7 +77,7 @@ export class CheckoutComponent implements OnInit {
    // console.log(this.checkoutFormGroup.get('customer').value);
   //  console.log("Emial is", this.checkoutFormGroup.get('customer').value.email); 
    let finalCart=new Finalcart(this.checkoutFormGroup.value.billingAddress,
-    this.checkoutFormGroup.value.shippingAddress, this.checkoutFormGroup.value.creditCard);
+    this.checkoutFormGroup.value.shippingAddress, this.checkoutFormGroup.value.creditCard, this.cartItems);
     
     console.log('finalcart is',finalCart);
     this._bookService.addFinalCart(this.finalCart);
