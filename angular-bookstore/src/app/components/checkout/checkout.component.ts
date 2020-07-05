@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder,Validators } from '@angular/forms';
 import { CartService } from 'src/app/service/cart.service';
 import { Finalcart } from 'src/app/common/finalcart';
 import { BookService } from 'src/app/service/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -17,8 +18,8 @@ export class CheckoutComponent implements OnInit {
   totalQuantity: number = 0;
   checkoutFormGroup: FormGroup;
    finalCart:Finalcart;
-
-  constructor(private formBuilder: FormBuilder,private _cartService: CartService,
+   router: Router;
+  constructor(private _router: Router,private formBuilder: FormBuilder,private _cartService: CartService,
     private _bookService:BookService) { }
 
  
@@ -76,11 +77,19 @@ export class CheckoutComponent implements OnInit {
      console.log('Purchase the books');
    // console.log(this.checkoutFormGroup.get('customer').value);
   //  console.log("Emial is", this.checkoutFormGroup.get('customer').value.email); 
-   let finalCart=new Finalcart(this.checkoutFormGroup.value.billingAddress,
+  this.finalCart=new Finalcart(this.checkoutFormGroup.value.billingAddress,
     this.checkoutFormGroup.value.shippingAddress, this.checkoutFormGroup.value.creditCard, this.cartItems);
     
-    console.log('finalcart is',finalCart);
-    this._bookService.addFinalCart(this.finalCart);
+    console.log('finalcart is',this.finalCart);
+    this._bookService.addFinalCart(this.finalCart).subscribe(
+      (response) => {
+      console.log(response);
+      this._router.navigateByUrl(`/checkoutsuccess/${response.order_id}`);
+      },
+     (err)=>{
+     console.log("Error",err); //======> In case of failure
+     }
+);
   }
 
   copyShippingAddressToBillingAddress(event) {

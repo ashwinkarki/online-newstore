@@ -25,9 +25,11 @@ import { BoardAdminComponent } from './components/board-admin/board-admin.compon
 import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
 import { BoardUserComponent } from './components/board-user/board-user.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { CheckoutsuccessfulComponent } from './components/checkoutsuccessful/checkoutsuccessful.component';
 
 
 const routes:Routes=[
+  { path: 'checkoutsuccess/:id',component:CheckoutsuccessfulComponent},
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -63,7 +65,8 @@ const routes:Routes=[
     ProfileComponent,
     BoardAdminComponent,
     BoardModeratorComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    CheckoutsuccessfulComponent
   ],
   imports: [
     BrowserModule,

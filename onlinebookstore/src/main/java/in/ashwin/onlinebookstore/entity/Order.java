@@ -59,6 +59,8 @@ public class Order {
 		this.todayDate = todayDate;
 	}
 	
-	
+	public Order() {
+		
+	}
 
 }

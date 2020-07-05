@@ -6,8 +6,10 @@ import { Book } from '../common/book';
 import { BookCategory } from '../common/book-category';
 import { Finalcart } from '../common/finalcart';
 
+
+//const  t:String="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2h3aW4iLCJpYXQiOjE1OTM5NjE3NzEsImV4cCI6MTU5NDA0ODE3MX0.uuiKh8gt80_0ee3DD9Qe-j7TnT6AQsvDQAz4qPkPZSjpP4vgznF7dQyIeHenKxLSae9E2dnCDe9Q6KAtFtZi2w";
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json'})
 };
 
 
@@ -19,6 +21,8 @@ export class BookService {
   private baseUrl="http://localhost:8080/api/v1/books";
   private categoryUrl="http://localhost:8080/api/v1/book-category";
   private finalCart="http://localhost:8080/api/test/";
+
+  
 
   constructor(private httpClient:HttpClient) { }
 
@@ -54,12 +58,11 @@ get(bookId:number):Observable<Book>{
 }
 
 
-addFinalCart(finalCart:Finalcart){
-
-
-  
-  return this.httpClient.post(`${this.baseUrl}`+'finalCart',finalCart, httpOptions);   
+addFinalCart(finalCart:Finalcart):Observable<any>{
+ 
+ return this.httpClient.post(`${this.finalCart}`+'finalCart',finalCart);   
 }
+
 }
 
 

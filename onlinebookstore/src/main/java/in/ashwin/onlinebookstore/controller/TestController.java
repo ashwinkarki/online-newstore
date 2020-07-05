@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +26,7 @@ import in.ashwin.onlinebookstore.entity.Book;
 import in.ashwin.onlinebookstore.entity.CartItem;
 import in.ashwin.onlinebookstore.entity.Finalcart;
 import in.ashwin.onlinebookstore.entity.Order;
+import in.ashwin.onlinebookstore.entity.OrderDetails;
 import in.ashwin.onlinebookstore.entity.Shippingaddress;
 import in.ashwin.onlinebookstore.entity.User;
 import in.ashwin.onlinebookstore.impl.UserDetailsImpl;
@@ -31,6 +34,7 @@ import in.ashwin.onlinebookstore.impl.UserDetailsServiceImpl;
 import in.ashwin.onlinebookstore.repository.BillingaddressRepository;
 import in.ashwin.onlinebookstore.repository.BookRepository;
 import in.ashwin.onlinebookstore.repository.CartItemRepository;
+import in.ashwin.onlinebookstore.repository.OrderDetailsRepository;
 import in.ashwin.onlinebookstore.repository.OrderRepository;
 import in.ashwin.onlinebookstore.repository.ShippingaddressRepository;
 
@@ -50,6 +54,9 @@ public class TestController {
 	
 	@Autowired
 	private CartItemRepository cartItemRepo;
+	
+	@Autowired
+	private OrderDetailsRepository orderDetailRepostiory;
 	
 
 	
@@ -84,16 +91,23 @@ public class TestController {
 	
 	@PostMapping("/finalCart")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-	public String finalCart(@RequestBody Finalcart finalCart,HttpServletRequest request) {
-		String user=request.getUserPrincipal().getName();
-	   System.out.println(user);
-	   
+	public ResponseEntity<?> finalCart(@RequestBody Finalcart finalCart) {
+		
+//		String user=request.getUserPrincipal().getName();
+//	   System.out.println(user);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String user = auth.getName();
+		//String user=AuthController.loggedInuserName;
+		System.out.println(user);
 	   System.out.println(finalCart);
 	
 	   UserDetailsImpl userDetails=(UserDetailsImpl)userdetailService.loadUserByUsername(user);
 		User u=new User(userDetails.getId(),userDetails.getUsername(),userDetails.getPassword(),userDetails.getEmail());
 	 Order ord= orderRep.save(new Order(u,new Date()));
 	 System.out.println(ord);
+	 
+	 
+	 
 	Billingaddress ba= billAddressRepo.save(new Billingaddress(finalCart.getBillingAddress(),ord));
 	System.out.println(ba);
 	 
@@ -102,17 +116,23 @@ public class TestController {
 	 
 	 finalCart.getCartItem().forEach(s->{
 		 Optional<Book> b=bookrepository.findById(Long.valueOf(s.getBookId()).longValue());
-		 cartItemRepo.save(new CartItem(s.getName(),s.getImageUrl(),s.getUnitPrice(),s.getQuantity(), b.get()));
+		CartItem c=cartItemRepo.save(new CartItem(s.getName(),s.getImageUrl(),s.getUnitPrice(),s.getQuantity(), b.get()));
+		orderDetailRepostiory.save(new OrderDetails(c,ord));	
 	 });
 	 
-	
-	 
-	   System.out.println(userDetails.getUsername()+userDetails.getPassword());
+	    System.out.println(userDetails.getUsername()+userDetails.getPassword());
 		System.out.println("entered here");
 		System.out.println(finalCart);
 		System.out.println(finalCart.getBillingAddress());
 		System.out.println(finalCart.getShippingAddress());
 		System.out.println(finalCart.getCreditCard());
-		return "null";
+		if(ord!=null) {
+	return	new ResponseEntity(ord, HttpStatus.OK);
+		}
+		else {
+	return	new ResponseEntity("BadException", HttpStatus.BAD_REQUEST);
+		}
+		
+	    
 	}
 }
