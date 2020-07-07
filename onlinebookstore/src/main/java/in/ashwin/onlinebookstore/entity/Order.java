@@ -18,7 +18,7 @@ public class Order {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int order_id;
+	private Long order_id;
 	
 	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "user_id", nullable = false)
@@ -27,21 +27,43 @@ public class Order {
 	@Column(name="today_date")
 	private Date todayDate;
 	
+	@Column(name="status")
+	private String status;
+	
 	
 
 	public Order(User user, Date todayDate) {
 		
 		this.user = user;
 		this.todayDate = todayDate;
+		this.status="pending";
 	}
 
-	public int getOrder_id() {
+
+	
+	
+
+	public Long getOrder_id() {
 		return order_id;
 	}
 
-	public void setOrder_id(int order_id) {
+
+
+
+
+	public void setOrder_id(Long order_id) {
 		this.order_id = order_id;
 	}
+
+
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+	
 
 	public User getUser() {
 		return user;

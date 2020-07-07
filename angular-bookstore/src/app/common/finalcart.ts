@@ -1,7 +1,7 @@
 import { Billingaddress } from './billingaddress';
-import {Creditcart} from './creditcart';
-import {Shippingaddress} from './shippingaddress';
 import { CartItem } from './cart-item';
+import { Creditcart } from './creditcard';
+import { Shippingaddress } from './shippingaddress';
 
 export class Finalcart {
 

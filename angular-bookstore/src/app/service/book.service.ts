@@ -23,7 +23,7 @@ export class BookService {
   private finalCart="http://localhost:8080/api/test/";
 
   
-
+   finalSavedCart:Finalcart;
   constructor(private httpClient:HttpClient) { }
 
   getBooks(theCategoryId:number,currentPage:number,pageSize:number):Observable<GetResponseBook>{
@@ -61,6 +61,11 @@ get(bookId:number):Observable<Book>{
 addFinalCart(finalCart:Finalcart):Observable<any>{
  
  return this.httpClient.post(`${this.finalCart}`+'finalCart',finalCart);   
+}
+
+holdSavedData(finalCart:Finalcart){
+  this.finalSavedCart=finalCart;
+/*   console.log(this.finalSavedCart); */
 }
 
 }

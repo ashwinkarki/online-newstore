@@ -1,1 +1,119 @@
-<h1>Your Orderr has been successfully Completed order Id is: {{orderedId}}</h1>
+
+<h1>Your Order has been successfully Completed order Id is: {{orderedId}}</h1>
+
+
+<table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>city</th>
+        <th> country</th>
+            <th> state</th>
+                <th> street</th>
+                    <th>zipcode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{dataInCart.billingAddress.city}}</td>
+        <td>{{dataInCart.billingAddress.country}}</td>
+        <td>{{dataInCart.billingAddress.state}}</td>
+        <td>{{dataInCart.billingAddress.street}}</td>
+        <td>{{dataInCart.billingAddress.zipcode}}</td>
+      </tr>
+        </tbody>
+  </table>
+  
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>city</th>
+        <th>country</th>
+            <th>state</th>
+                <th>street</th>
+                    <th>zipcode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{dataInCart.shippingAddress.city}}</td>
+        <td>{{dataInCart.shippingAddress.country}}</td>
+        <td>{{dataInCart.shippingAddress.state}}</td>
+        <td>{{dataInCart.shippingAddress.street}}</td>
+        <td>{{dataInCart.shippingAddress.zipcode}}</td>
+      </tr>
+     
+    </tbody>
+  </table>
+
+
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>cardNumber</th>
+        <th>cardType</th>
+            <th>cvv</th>
+                <th>expirationMonth</th>
+                    <th>expirationYear</th>
+                        <th>nameOnCard<th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{dataInCart.creditCard.cardNumber}}</td>
+        <td>{{dataInCart.creditCard.cardType}}</td>
+            <td>{{dataInCart.creditCard.cvv}}</td>
+                <td>{{dataInCart.creditCard.expirationMonth}}</td>
+                    <td>{{dataInCart.creditCard.expirationYear}}</td>
+                        <td>{{dataInCart.creditCard.nameOnCard}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="cartItems.length > 0">
+    <table class="table table-bordered">
+        <thead class="bg-dark text-light">
+            <tr>
+                <th width="20%">Product Image</th>
+                <th width="50%">Product Detail</th>
+                <th width="30%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cartItem of cartItems">
+                <td>
+                    <img [src]="cartItem.imageUrl" class="img-responsive" width="150" height="200" />
+                </td>
+                <td>
+                    <p>{{ cartItem.name }}</p>
+                    <p>{{ cartItem.unitPrice | currency: 'NPR'}}</p>
+                </td>
+                <td>
+                    <div class="row">
+                        <div class="col-md-12">
+                             <p>Quantity:</p>
+                        </div>
+                        
+                        <div class="col-md-4 text-center">
+                            {{cartItem.quantity}}
+                        </div>
+                     
+                        <div class="col-md-12 mt-2">
+                            <p>Subtotal: {{ cartItem.quantity * cartItem.unitPrice | currency: 'NPR'}}</p>
+                        </div> 
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td class="font-weight-bold">
+                    <p>Total quantity: {{totalQuantity}}</p>
+                    <p>Shipping: FREE</p>
+                    <p>Total Price: {{ totalPrice | currency: 'NPR' }}</p>
+                   
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
